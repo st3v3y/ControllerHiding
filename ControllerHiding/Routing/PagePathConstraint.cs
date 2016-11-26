@@ -11,7 +11,7 @@ namespace ControllerHiding.Routing
 
             if (values[parameterName] == null)
             {
-                return false;
+                return true;
             }
 
             var pagePath = values[parameterName].ToString();
@@ -24,7 +24,7 @@ namespace ControllerHiding.Routing
 
             if (!PageExtists(pageSlugs))
             {
-                return false;
+                return true;
             }
 
             //We can save same information for later, if we want to

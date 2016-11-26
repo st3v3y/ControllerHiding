@@ -56,25 +56,6 @@ namespace ControllerHiding.Routing
             IHttpHandler handler;
             using (RouteTable.Routes.GetReadLock())
             {
-                //Route hiddenRoute;
-                //var routes = RouteTable.Routes.OfType<Route>()
-                //                                    .Where(x => x.Defaults != null &&
-                //                                                x.Defaults.ContainsKey("controller") &&
-                //                                                x.Defaults["controller"].ToString().Equals(hiddenController, StringComparison.InvariantCultureIgnoreCase) &&
-                //                                                x.DataTokens.ContainsKey("area") == false).ToList();
-
-                //// If more than one route is found, find one with a matching action
-                //if (routes.Count() > 1)
-                //{
-                //    hiddenRoute = routes.FirstOrDefault(x =>
-                //        x.Defaults["action"] != null &&
-                //        x.Defaults["action"].ToString().Equals(hiddenAction, StringComparison.InvariantCultureIgnoreCase));
-                //}
-                //else
-                //{
-                //    hiddenRoute = routes.SingleOrDefault();
-                //}
-
                 Route hiddenRoute = RouteTable.Routes.OfType<Route>()
                     .SingleOrDefault(x =>
                         x.Defaults != null &&
@@ -83,11 +64,6 @@ namespace ControllerHiding.Routing
                 if (hiddenRoute == null)
                 {
                     throw new InvalidOperationException("Could not find a controller route for controller: " + hiddenController);
-                }
-
-                if (hiddenRoute.DataTokens.ContainsKey("Namespaces"))
-                {
-                    requestContext.RouteData.DataTokens["Namespaces"] = hiddenRoute.DataTokens["Namespaces"];
                 }
 
                 handler = hiddenRoute.RouteHandler.GetHttpHandler(requestContext);

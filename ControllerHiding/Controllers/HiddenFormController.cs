@@ -9,8 +9,22 @@ namespace ControllerHiding.Controllers
 {
     public class HiddenFormController : Controller
     {
-        public ActionResult Index(HiddenFormModel model)
+        public ActionResult Index()
         {
+            object modelState;
+            if (TempData.TryGetValue("ModelState", out modelState))
+            {
+                ViewData.ModelState.Merge((ModelStateDictionary)modelState);
+            }
+
+            object viewDataModel;
+            var model = new HiddenFormModel();
+            if (TempData.TryGetValue("MyModel", out viewDataModel))
+            {
+                model = viewDataModel as HiddenFormModel;
+                return View(model);
+            }
+
             return View(model);
         }
 
@@ -19,7 +33,7 @@ namespace ControllerHiding.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToHome();
+                return RedirectToHome(model);
             }
 
             //Save model data in DB or so
@@ -27,8 +41,13 @@ namespace ControllerHiding.Controllers
             return RedirectToHome();
         }
 
-        private ActionResult RedirectToHome()
+        private ActionResult RedirectToHome(object model = null)
         {
+            if (model != null)
+            {
+                ViewData["MyModel"] = model;
+            }
+
             return new HomeActionResult();
         }
     }

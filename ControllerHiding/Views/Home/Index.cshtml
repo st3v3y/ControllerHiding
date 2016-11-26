@@ -1,5 +1,7 @@
-﻿@using ControllerHiding.Models
+﻿@using System.Globalization
+@using ControllerHiding.Models
 @model dynamic
+
 
 @{
     ViewBag.Title = "Home";
@@ -12,8 +14,18 @@ Home, sweet home!
 
 
 @{
-    var model = ViewData["MyModelData"] ?? new HiddenFormModel { Name = string.Empty };
+    object myModel;
+    if (ViewData.TryGetValue("MyModel", out myModel))
+    {
+        TempData["MyModel"] = myModel;
+    }
+
+    if (!ViewData.ModelState.IsValid)
+    {
+        TempData["ModelState"] = ViewData.ModelState;
+    }
 }
 
 
-@Html.Action("Index", "HiddenForm", model)
+@Html.Action("Index", "HiddenForm")
+

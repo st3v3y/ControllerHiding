@@ -10,6 +10,8 @@ namespace ControllerHiding.Routing
             var routeDef = (RouteDefinition)context.RouteData.DataTokens["MyHomepageRouteDefinition"];
 
             var factory = ControllerBuilder.Current.GetControllerFactory();
+
+            context.RouteData.Values["controller"] = routeDef.ControllerName;
             context.RouteData.Values["action"] = routeDef.ActionName;
 
             ControllerBase controller = null;
@@ -58,12 +60,12 @@ namespace ControllerHiding.Routing
         /// </summary>
         private static void CopyControllerData(ControllerContext context, ControllerBase controller)
         {
+            controller.ViewData.ModelState.Merge(context.Controller.ViewData.ModelState);
+
             foreach (var data in context.Controller.ViewData)
             {
                 controller.ViewData[data.Key] = data.Value;
             }
-
-            controller.ViewData.ModelState.Merge(context.Controller.ViewData.ModelState);
 
             var target = controller as Controller;
             var source = context.Controller as Controller;
