@@ -1,17 +1,23 @@
-﻿@model ControllerHiding.Models.HiddenFormModel
+﻿@using ControllerHiding.Extensions
+@using ControllerHiding.Models
+@model HiddenFormModel
 
-<h2>Hidden Controller @(ViewData["identifier"] ?? "")</h2>
+@{
+    var hiddenFormData = new HiddenFormData()
+    {
+        Controller = "HiddenForm",
+        Action = "MyFormAction",
+        Identifier = ViewData["Identifier"]?.ToString()
+    };
+}
+
+<h2>Hidden Controller</h2>
 
 @Html.ValidationSummary("")
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
-    @* To fully hide the controller/action, we could encrypt 
-    both information in a single hidden input and decrypt 
-    it later in the RenderRouteHandler *@
-    <input type="hidden" name="Controller" value="HiddenForm"/>
-    <input type="hidden" name="Action" value="MyFormAction"/>
-    <input type="hidden" name="Identifier" value="@ViewData["identifier"]" />
+    <input type="hidden" name="FormData" value="@hiddenFormData.Encrypt()" />
 
     @Html.LabelFor(x => x.Name)
     @Html.TextBoxFor(x => x.Name)

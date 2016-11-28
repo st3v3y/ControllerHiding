@@ -31,3 +31,5 @@ c:\users\stefa\documents\visual studio 2015\Projects\ControllerHiding\Controller
 c:\users\stefa\documents\visual studio 2015\Projects\ControllerHiding\ControllerHiding\obj\Debug\ControllerHiding.csprojResolveAssemblyReference.cache
 c:\users\stefa\documents\visual studio 2015\Projects\ControllerHiding\ControllerHiding\obj\Debug\ControllerHiding.dll
 c:\users\stefa\documents\visual studio 2015\Projects\ControllerHiding\ControllerHiding\obj\Debug\ControllerHiding.pdb
+C:\Users\stefa\documents\visual studio 2015\Projects\ControllerHiding\ControllerHiding\bin\Newtonsoft.Json.dll
+C:\Users\stefa\documents\visual studio 2015\Projects\ControllerHiding\ControllerHiding\bin\Newtonsoft.Json.xml

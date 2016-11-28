@@ -17,7 +17,7 @@ namespace ControllerHiding
                 new { controller = "Home", action = "Index", path = UrlParameter.Optional },
                 new { path = new PagePathConstraint() }
             );
-            defaultRoute.RouteHandler = new RenderRouteHandler(ControllerBuilder.Current.GetControllerFactory());
+            defaultRoute.RouteHandler = new RenderRouteHandler();
 
             routes.MapRoute(
                 name: "SubControllers",

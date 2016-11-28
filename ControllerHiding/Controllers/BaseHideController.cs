@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using ControllerHiding.Constants;
 using ControllerHiding.Filters;
 using ControllerHiding.Routing;
 
@@ -10,10 +11,9 @@ namespace ControllerHiding.Controllers
     {
         public ActionResult Index()
         {
-            object viewDataModel;
             var model = new TModel();
-            object isPostedModel;
-            if (ViewData.TryGetValue("IsPostedModel", out isPostedModel) && isPostedModel is bool && (bool)isPostedModel && TempData.TryGetValue("MyModel", out viewDataModel))
+            object viewDataModel;
+            if (ViewData.TryGetValue(KeyConstants.IdentifiedSubModel, out viewDataModel))
             {
                 model = viewDataModel as TModel;
                 return Index(model);
@@ -28,7 +28,7 @@ namespace ControllerHiding.Controllers
         {
             if (model != null)
             {
-                ViewData["MyModel"] = model;
+                ViewData[KeyConstants.SubModel] = model;
             }
             return new HomeActionResult();
         }

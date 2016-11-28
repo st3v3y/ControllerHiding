@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using ControllerHiding.Constants;
 
 namespace ControllerHiding.Routing
 {
@@ -7,23 +8,23 @@ namespace ControllerHiding.Routing
     {
         public override void ExecuteResult(ControllerContext context)
         {
-            var routeDef = (RouteDefinition)context.RouteData.DataTokens["MyHomepageRouteDefinition"];
-
             var factory = ControllerBuilder.Current.GetControllerFactory();
 
-            context.RouteData.Values["controller"] = routeDef.ControllerName;
-            context.RouteData.Values["action"] = routeDef.ActionName;
+            var homeControllerName = "Home";
 
-            context.Controller.ViewData["formIdentifier"] = context.RouteData.DataTokens["identifier"];
+            context.RouteData.Values["controller"] = homeControllerName;
+            context.RouteData.Values["action"] = "Index";
+
+            context.Controller.ViewData[KeyConstants.FormIdentifier] = context.RouteData.Values[KeyConstants.Identifier];
 
             ControllerBase controller = null;
 
             try
             {
-                controller = factory.CreateController(context.RequestContext, routeDef.ControllerName) as ControllerBase;
+                controller = factory.CreateController(context.RequestContext, homeControllerName) as ControllerBase;
                 if (controller == null)
                 {
-                    throw new InvalidOperationException("Could not create controller with name " + routeDef.ControllerName + ".");
+                    throw new InvalidOperationException("Could not create controller with name " + homeControllerName + ".");
                 }
 
                 CopyControllerData(context, controller);

@@ -5,31 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Home</h2>
-Home, sweet home!
+<div class="jumbotron">
+    <div class="container">
+        <h2>Home</h2>
+        <p>Home, sweet home!</p>
+        <p>But you can also check out <a href="/MyHomepage">here</a> or <a href="/MyHomepage/MyAction">here</a> (notice URL will change)</p>
+    </div>
+</div>
 
-@{
-    object myModel;
-    if (ViewData.TryGetValue("MyModel", out myModel))
-    {
-        TempData["MyModel"] = myModel;
-    }
-
-    object identifier;
-    if (ViewData.TryGetValue("formIdentifier", out identifier))
-    {
-        TempData["formIdentifier"] = identifier;
-    }
-
-    if (!ViewData.ModelState.IsValid)
-    {
-        TempData["ModelState"] = ViewData.ModelState;
-    }
-}
-
-
-@Html.Action("Index", "HiddenForm", new { identifier = "test1" } )
-
-@Html.Action("Index", "HiddenForm", new { identifier = "test2" })
-
-@Html.Action("Index", "AnotherHiddenForm", new { identifier = "test3" })
+<div class="container">
+    <div class="col-md-4">
+        @Html.Action("Index", "HiddenForm", new {identifier = new Guid("02A9152F-FF90-4A4D-9334-98948E60F834")})
+    </div>
+    <div class="col-md-4">
+        @Html.Action("Index", "HiddenForm", new {identifier = "663A1B49-E9F7-4106-B8A6-DB8CB68D9B55"})
+    </div>
+    <div class="col-md-4">
+        @Html.Action("Index", "AnotherHiddenForm", new { identifier = "Another-identification-string" })
+    </div>
+</div>

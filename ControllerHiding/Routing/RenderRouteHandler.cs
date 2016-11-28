@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+using ControllerHiding.Constants;
+using ControllerHiding.Extensions;
+using ControllerHiding.Models;
 
 namespace ControllerHiding.Routing
 {
@@ -12,15 +13,12 @@ namespace ControllerHiding.Routing
     /// </summary>
     public class RenderRouteHandler : IRouteHandler
     {
-        public RenderRouteHandler(IControllerFactory getControllerFactory)
-        {
-        }
-
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             var httpRequestBase = requestContext.HttpContext.Request;
 
-            if (string.IsNullOrEmpty(httpRequestBase.Form["Controller"]))
+            string formData = httpRequestBase.Form.Get(KeyConstants.FormData);
+            if (string.IsNullOrEmpty(formData))
             {
                 return new MvcHandler(requestContext);
             }
@@ -32,9 +30,11 @@ namespace ControllerHiding.Routing
 
             if (httpRequestBase.RequestType == "POST")
             {
-                hiddenController = httpRequestBase.Form["Controller"];
-                hiddenAction = httpRequestBase.Form["Action"];
-                identifier = httpRequestBase.Form["Identifier"];
+                var hiddenFormData = formData.Decrypt<HiddenFormData>();
+
+                hiddenController = hiddenFormData.Controller;
+                hiddenAction = hiddenFormData.Action;
+                identifier = hiddenFormData.Identifier;
             }
             else if (requestContext.HttpContext.Request.RequestType == "GET")
             {
@@ -46,15 +46,9 @@ namespace ControllerHiding.Routing
                 return null;
             }
 
-            requestContext.RouteData.DataTokens["identifier"] = identifier;
-            requestContext.RouteData.DataTokens["MyHomepageRouteDefinition"] = new RouteDefinition()
-            {
-                ControllerName = "Home",
-                ActionName = "Index",
-            };
-
             requestContext.RouteData.Values["controller"] = hiddenController;
             requestContext.RouteData.Values["action"] = hiddenAction;
+            requestContext.RouteData.Values["identifier"] = identifier;
 
             return new MvcHandler(requestContext);
         }
