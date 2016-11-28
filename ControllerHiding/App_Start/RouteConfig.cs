@@ -19,22 +19,10 @@ namespace ControllerHiding
             );
             defaultRoute.RouteHandler = new RenderRouteHandler(ControllerBuilder.Current.GetControllerFactory());
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
-
             routes.MapRoute(
-                name: "HiddenFormController",
+                name: "SubControllers",
                 url: "{controller}/{action}",
-                defaults: new { controller = "HiddenForm", action = "Index" }
-            );
-
-            routes.MapRoute(
-                name: "AnotherHiddenFormController",
-                url: "{controller}/{action}",
-                defaults: new { controller = "AnotherHiddenForm", action = "Index" }
+                defaults: new { controller = "Home", action = "Index" }
             );
         }
     }

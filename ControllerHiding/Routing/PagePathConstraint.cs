@@ -31,7 +31,6 @@ namespace ControllerHiding.Routing
                 return true;
             }
 
-            //We can save same information for later, if we want to
             route.DataTokens.Add("page", pageSlugs[0]);
             route.DataTokens.Add("path", pagePath);
 

@@ -56,25 +56,7 @@ namespace ControllerHiding.Routing
             requestContext.RouteData.Values["controller"] = hiddenController;
             requestContext.RouteData.Values["action"] = hiddenAction;
 
-            IHttpHandler handler;
-            using (RouteTable.Routes.GetReadLock())
-            {
-                Route hiddenRoute = RouteTable.Routes.OfType<Route>()
-                    .SingleOrDefault(x =>
-                        x.Defaults != null &&
-                        x.Defaults["controller"].ToString() == hiddenController);
-
-                if (hiddenRoute == null)
-                {
-                    throw new InvalidOperationException("Could not find a controller route for controller: " + hiddenController);
-                }
-
-                handler = hiddenRoute.RouteHandler.GetHttpHandler(requestContext);
-            }
-
-            return handler;
+            return new MvcHandler(requestContext);
         }
-
-
     }
 }
