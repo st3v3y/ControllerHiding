@@ -28,11 +28,13 @@ namespace ControllerHiding.Routing
             string hiddenController = null;
             string hiddenAction = null;
             //string area; //ignore area to make it easier in the beginning
+            string identifier = null;
 
             if (httpRequestBase.RequestType == "POST")
             {
                 hiddenController = httpRequestBase.Form["Controller"];
                 hiddenAction = httpRequestBase.Form["Action"];
+                identifier = httpRequestBase.Form["Identifier"];
             }
             else if (requestContext.HttpContext.Request.RequestType == "GET")
             {
@@ -44,6 +46,7 @@ namespace ControllerHiding.Routing
                 return null;
             }
 
+            requestContext.RouteData.DataTokens["identifier"] = identifier;
             requestContext.RouteData.DataTokens["MyHomepageRouteDefinition"] = new RouteDefinition()
             {
                 ControllerName = "Home",

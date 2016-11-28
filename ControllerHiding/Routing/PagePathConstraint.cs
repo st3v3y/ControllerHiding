@@ -1,4 +1,5 @@
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace ControllerHiding.Routing
@@ -19,6 +20,9 @@ namespace ControllerHiding.Routing
             string[] pageSlugs = pagePath.Split('/');
             if (pageSlugs.Length == 1 && pageSlugs[0] == string.Empty)
             {
+                route.DataTokens.Add("page", "Home");
+                route.DataTokens.Add("path", pagePath);
+
                 return true; //default
             }
 
@@ -41,16 +45,13 @@ namespace ControllerHiding.Routing
         /// <returns></returns>
         private static bool PageExtists(string[] urlSegments)
         {
-            if (urlSegments.Length == 1 && urlSegments[0] == "MyHomepage")
+            if (urlSegments[0] == "MyHomepage")
             {
-                return true; //my homepage
+                if (urlSegments.Length == 1 || urlSegments[1] == string.Empty || urlSegments[1] == "MyAction")
+                {
+                    return true; 
+                }
             }
-
-            if (urlSegments.Length == 2 && urlSegments[0] == "MyHomepage" && urlSegments[1] == "MyAction")
-            {
-                return true; //any strange action
-            }
-
             return false;
         }
     }

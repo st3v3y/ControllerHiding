@@ -112,7 +112,12 @@
     <Content Include="Views\HiddenForm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AnotherHiddenFormModel.cs" />
+    <Compile Include="Controllers\BaseHideController.cs" />
+    <Compile Include="Controllers\AnotherHiddenFormController.cs" />
     <Compile Include="Controllers\HiddenFormController.cs" />
+    <Compile Include="Filters\HideActionFilterAttribute.cs" />
+    <Compile Include="Models\PagePathInfoModel.cs" />
     <Compile Include="Routing\HomeActionResult.cs" />
     <Compile Include="Models\HiddenFormModel.cs" />
     <Compile Include="Routing\PagePathConstraint.cs" />
@@ -131,6 +136,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\AnotherHiddenForm\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

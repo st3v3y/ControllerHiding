@@ -1,7 +1,4 @@
-﻿@using System.Globalization
-@using ControllerHiding.Models
-@model dynamic
-
+﻿@model dynamic
 
 @{
     ViewBag.Title = "Home";
@@ -9,15 +6,19 @@
 }
 
 <h2>Home</h2>
-
 Home, sweet home!
-
 
 @{
     object myModel;
     if (ViewData.TryGetValue("MyModel", out myModel))
     {
         TempData["MyModel"] = myModel;
+    }
+
+    object identifier;
+    if (ViewData.TryGetValue("formIdentifier", out identifier))
+    {
+        TempData["formIdentifier"] = identifier;
     }
 
     if (!ViewData.ModelState.IsValid)
@@ -27,5 +28,8 @@ Home, sweet home!
 }
 
 
-@Html.Action("Index", "HiddenForm")
+@Html.Action("Index", "HiddenForm", new { identifier = "test1" } )
 
+@Html.Action("Index", "HiddenForm", new { identifier = "test2" })
+
+@Html.Action("Index", "AnotherHiddenForm", new { identifier = "test3" })

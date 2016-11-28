@@ -11,6 +11,11 @@ namespace ControllerHiding.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            if (RouteData.DataTokens["page"] == null)
+            {
+                return HttpNotFound();
+            }
+
             return View();
         }
     }

@@ -6,15 +6,15 @@ using ControllerHiding.Models;
 
 namespace ControllerHiding.Controllers
 {
-    public class HiddenFormController : BaseHideController<HiddenFormModel>
+    public class AnotherHiddenFormController : BaseHideController<AnotherHiddenFormModel>
     {
-        protected override ActionResult Index(HiddenFormModel model)
+        protected override ActionResult Index(AnotherHiddenFormModel model)
         {
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult MyFormAction(HiddenFormModel model)
+        public ActionResult MyFormAction(AnotherHiddenFormModel model)
         {
             if (!ModelState.IsValid)
             {

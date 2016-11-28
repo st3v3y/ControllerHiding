@@ -14,6 +14,8 @@ namespace ControllerHiding.Routing
             context.RouteData.Values["controller"] = routeDef.ControllerName;
             context.RouteData.Values["action"] = routeDef.ActionName;
 
+            context.Controller.ViewData["formIdentifier"] = context.RouteData.DataTokens["identifier"];
+
             ControllerBase controller = null;
 
             try
