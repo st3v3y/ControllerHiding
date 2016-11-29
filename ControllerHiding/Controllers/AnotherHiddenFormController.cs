@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ControllerHiding.Models;
 
 namespace ControllerHiding.Controllers
 {
     public class AnotherHiddenFormController : BaseHideController<AnotherHiddenFormModel>
     {
-        protected override ActionResult Index(AnotherHiddenFormModel model)
+        public ActionResult Index()
         {
-            return View(model);
+            return View(Model);
         }
 
         [HttpPost]

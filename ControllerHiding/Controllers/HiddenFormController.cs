@@ -8,9 +8,9 @@ namespace ControllerHiding.Controllers
 {
     public class HiddenFormController : BaseHideController<HiddenFormModel>
     {
-        protected override ActionResult Index(HiddenFormModel model)
+        public ActionResult Index()
         {
-            return View(model);
+            return View(Model);
         }
 
         [HttpPost]
