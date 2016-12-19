@@ -8,14 +8,16 @@ namespace ControllerHiding.Security
 
         public string EncryptData(TEncryptData @object)
         {
-            var serializedData = new JavaScriptSerializer().Serialize(@object);
+            var javaScriptSerializer = new JavaScriptSerializer(new SimpleTypeResolver());
+            var serializedData = javaScriptSerializer.Serialize(@object);
             return Protect(serializedData, CryptPurpose);
         }
 
         public TEncryptData DecryptData(string text)
         {
             var encryptedtext = Unprotect(text, CryptPurpose);
-            return new JavaScriptSerializer().Deserialize<TEncryptData>(encryptedtext);
+            var javaScriptSerializer = new JavaScriptSerializer(new SimpleTypeResolver());
+            return javaScriptSerializer.Deserialize<TEncryptData>(encryptedtext);
         }
     }
 }

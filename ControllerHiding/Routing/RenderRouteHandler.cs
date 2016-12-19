@@ -1,7 +1,8 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
 using ControllerHiding.Constants;
 using ControllerHiding.Extensions;
 using ControllerHiding.Models;
@@ -18,7 +19,9 @@ namespace ControllerHiding.Routing
             var httpRequestBase = requestContext.HttpContext.Request;
 
             string formData = httpRequestBase.Form.Get(KeyConstants.FormData);
-            if (string.IsNullOrEmpty(formData))
+            string getData = httpRequestBase.QueryString.Get(KeyConstants.GetData);
+
+            if (string.IsNullOrEmpty(formData) && string.IsNullOrEmpty(getData))
             {
                 return new MvcHandler(requestContext);
             }
@@ -48,7 +51,7 @@ namespace ControllerHiding.Routing
 
             requestContext.RouteData.Values["controller"] = hiddenController;
             requestContext.RouteData.Values["action"] = hiddenAction;
-            requestContext.RouteData.Values["identifier"] = identifier;
+            requestContext.RouteData.Values[KeyConstants.Identifier] = identifier;
 
             return new MvcHandler(requestContext);
         }

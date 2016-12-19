@@ -3,7 +3,7 @@ using ControllerHiding.Models;
 
 namespace ControllerHiding.Controllers
 {
-    public class AnotherHiddenFormController : BaseHideController<AnotherHiddenFormModel>
+    public class AnotherHiddenFormController : BaseHideController
     {
         public ActionResult Index()
         {
@@ -15,12 +15,21 @@ namespace ControllerHiding.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToHome(model);
+                return View(model);
             }
 
             //Save model data in DB or so
 
-            return RedirectToHome();
+            return RedirectToAction("Success", new AnotherHiddenFormSuccessModel()
+            {
+                Name = model.Name,
+                Street = model.Street
+            });
+        }
+
+        public ActionResult Success(AnotherHiddenFormSuccessModel model)
+        {
+            return View("Success", model);
         }
     }
 }

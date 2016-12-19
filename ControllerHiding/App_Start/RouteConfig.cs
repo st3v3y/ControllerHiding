@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using ControllerHiding.Routing;
 
@@ -21,8 +20,8 @@ namespace ControllerHiding
 
             routes.MapRoute(
                 name: "SubControllers",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Home", action = "Index" }
+                url: "{controller}/{action}/{Identifier}",
+                defaults: new { controller = "Home", action = "Index", Identifier = UrlParameter.Optional }
             );
         }
     }

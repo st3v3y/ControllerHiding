@@ -1,4 +1,6 @@
-﻿namespace ControllerHiding.Models
+﻿using System;
+
+namespace ControllerHiding.Models
 {
     public class HiddenFormData
     {

@@ -117,11 +117,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\KeyConstants.cs" />
+    <Compile Include="Controllers\StandardFormController.cs" />
+    <Compile Include="Extensions\ViewDataExtensions.cs" />
+    <Compile Include="Models\AnotherHiddenFormSuccessModel.cs" />
+    <Compile Include="Controllers\ChildController.cs" />
     <Compile Include="Extensions\EncryptionExtensions.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Models\AnotherHiddenFormModel.cs" />
     <Compile Include="Controllers\BaseHideController.cs" />
     <Compile Include="Controllers\AnotherHiddenFormController.cs" />
     <Compile Include="Controllers\HiddenFormController.cs" />
+    <Compile Include="Models\HiddenGetData.cs" />
+    <Compile Include="Models\StandardFormModel.cs" />
     <Compile Include="Routing\HomeActionResult.cs" />
     <Compile Include="Models\HiddenFormModel.cs" />
     <Compile Include="Routing\PagePathConstraint.cs" />
@@ -144,6 +151,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\AnotherHiddenForm\Index.cshtml" />
     <Content Include="Views\AnotherHiddenForm\Success.cshtml" />
+    <Content Include="Views\StandardForm\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -153,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Child\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

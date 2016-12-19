@@ -1,0 +1,26 @@
+﻿@using ControllerHiding.Extensions
+@using ControllerHiding.Models
+@model StandardFormModel
+
+<h2>Standard Controller</h2>
+
+@{
+    var hiddenFormData = new HiddenFormData()
+    {
+        Controller = "StandardForm",
+        Action = "MyFormAction",
+        Identifier = ViewData["Identifier"]?.ToString()
+    };
+}
+
+@Html.ValidationSummary("")
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <input type="hidden" name="FormData" value="@hiddenFormData.Encrypt()" />
+
+    @Html.LabelFor(x => x.Name)
+    @Html.TextBoxFor(x => x.Name)
+
+    <button type="submit">Send</button>
+}

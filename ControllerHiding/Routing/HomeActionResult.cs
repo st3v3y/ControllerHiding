@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using ControllerHiding.Constants;
+using ControllerHiding.Controllers;
 
 namespace ControllerHiding.Routing
 {
@@ -10,12 +10,7 @@ namespace ControllerHiding.Routing
         {
             var factory = ControllerBuilder.Current.GetControllerFactory();
 
-            var homeControllerName = "Home";
-
-            context.RouteData.Values["controller"] = homeControllerName;
-            context.RouteData.Values["action"] = "Index";
-
-            context.Controller.ViewData[KeyConstants.FormIdentifier] = context.RouteData.Values[KeyConstants.Identifier];
+            var homeControllerName = context.RouteData.Values["controller"]?.ToString();
 
             ControllerBase controller = null;
 
@@ -71,13 +66,15 @@ namespace ControllerHiding.Routing
             }
 
             var target = controller as Controller;
-            var source = context.Controller as Controller;
-            if (target != null && source != null)
+            var source = context.Controller as ChildController;
+            if (target == null || source == null)
             {
-                target.TempDataProvider = source.TempDataProvider;
-                target.TempData = source.TempData;
-                target.TempData.Save(source.ControllerContext, source.TempDataProvider);
+                return;
             }
+
+            target.TempDataProvider = source.TempDataProvider;
+            target.TempData = source.TempData;
+            target.TempData.Save(source.ControllerContext, source.TempDataProvider);
         }
     }
 }

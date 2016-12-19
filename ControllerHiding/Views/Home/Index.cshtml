@@ -1,4 +1,6 @@
-﻿@model dynamic
+﻿@using ControllerHiding.Constants
+@using ControllerHiding.Extensions
+@model dynamic
 
 @{
     ViewBag.Title = "Home";
@@ -9,18 +11,29 @@
     <div class="container">
         <h2>Home</h2>
         <p>Home, sweet home!</p>
-        <p>But you can also check out <a href="/MyHomepage">here</a> or <a href="/MyHomepage/MyAction">here</a> (notice URL will change)</p>
+        <p>But you can also check out <a href="/MyHomepage">here</a> or <a href="/MyHomepage/MyAction">here</a> (notice URL will change)
+        </p>
     </div>
 </div>
 
 <div class="container">
-    <div class="col-md-4">
-        @Html.Action("Index", "HiddenForm", new {identifier = new Guid("02A9152F-FF90-4A4D-9334-98948E60F834")})
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ChildAction("Index", "StandardForm", new Guid("A53EF782-C9AB-476C-ABA4-B0946F907512").ToString())
+        </div>
     </div>
-    <div class="col-md-4">
-        @Html.Action("Index", "HiddenForm", new {identifier = "663A1B49-E9F7-4106-B8A6-DB8CB68D9B55"})
-    </div>
-    <div class="col-md-4">
-        @Html.Action("Index", "AnotherHiddenForm", new { identifier = "Another-identification-string" })
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.ChildAction("Index", "HiddenForm", new Guid("02A9152F-FF90-4A4D-9334-98948E60F834").ToString())
+        </div>
+        <div class="col-md-4">
+            @Html.ChildAction("Index", "HiddenForm", "02A9152F-FF90-4A4D-9334-98948E60F834")
+        </div>
+        <div class="col-md-4">
+            @Html.ChildAction("Index", "AnotherHiddenForm", "Another-identification-string")
+        </div>
     </div>
 </div>
+
+
