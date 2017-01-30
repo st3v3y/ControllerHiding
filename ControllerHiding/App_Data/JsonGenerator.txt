@@ -1,0 +1,50 @@
+﻿//Template for the json-generator created by Vazha Omanashvili (http://beta.json-generator.com/). Thanks for this great tool!
+
+[
+  {
+    'repeat(15)': {
+      Id: '{{guid()}}',
+      Author: {
+        Id: '{{guid()}}',
+        FirstName: '{{firstName()}}',
+        LastName: '{{surname()}}',
+        Company: '{{company()}}',
+        Email: function (tags) {
+          // Email tag is deprecated, because now you can produce an email as simple as this:
+          return (this.FirstName + '.' + this.LastName + '@' + this.Company +  tags.domainZone()).toLowerCase();
+        },
+        ImageUrl: 'http://placehold.it/32x32'
+      },
+      Title: '{{lorem(10, "words")}}',
+      Teaser: '{{lorem(1, "paragraphs")}}',
+      Text:'{{lorem(5, "paragraphs")}}',
+      ImageUrl: 'http://placehold.it/800x100',
+      Tags: [
+        {
+          'repeat(5,10)': '{{lorem(1, "words")}}'
+        }
+      ],
+      Date: '{{moment(this.date(new Date(2014, 0, 1), new Date())).format("MM/DD/YYYY HH:mm:ss")}}',
+      Comments: [
+        {
+          'repeat(0,10)': {
+            Id: '{{guid()}}',
+            Author: {
+              Id: '{{guid()}}',
+              FirstName: '{{firstName()}}',
+              LastName: '{{surname()}}',
+              Company: '{{company()}}',
+              Email: function (tags) {
+                // Email tag is deprecated, because now you can produce an email as simple as this:
+                return (this.FirstName + '.' + this.LastName + '@' + this.Company + tags.domainZone()).toLowerCase();
+              },
+              ImageUrl: 'http://placehold.it/32x32'
+            },
+            Date: '{{moment(this.date(new Date(2014, 0, 1), new Date())).format("MM/DD/YYYY HH:mm:ss")}}',
+            Text: '{{lorem(1, "paragraphs")}}'
+          }
+        }
+      ]
+    }
+  }
+]

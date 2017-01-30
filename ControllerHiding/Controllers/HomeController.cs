@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using ControllerHiding.Constants;
+using ControllerHiding.DTO;
 
 namespace ControllerHiding.Controllers
 {
@@ -8,13 +8,13 @@ namespace ControllerHiding.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            if (RouteData.DataTokens["page"] == null)
+            var page = RouteData.DataTokens["page"] as Page;
+            if (page == null)
             {
                 return HttpNotFound();
             }
 
-            return View();
+            return View(page);
         }
-
     }
 }

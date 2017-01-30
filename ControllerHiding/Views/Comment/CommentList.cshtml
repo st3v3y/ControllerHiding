@@ -1,0 +1,28 @@
+﻿@model ControllerHiding.DTO.Comment[]
+
+@{
+    Layout = "";
+}
+
+<h3>Comments</h3>
+
+@if (!Model.Any())
+{
+    <p>No comments available!</p>
+}
+
+@foreach (var comment in Model)
+{
+    <div class="media">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="http://placehold.it/64x64" alt="">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a href="mailto:@comment.Author.Email">@comment.Author.FirstName @comment.Author.LastName</a>
+                <small>@comment.Date</small>
+            </h4>
+            @comment.Text
+        </div>
+    </div>
+}

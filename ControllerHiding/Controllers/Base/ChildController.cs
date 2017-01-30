@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -6,11 +7,9 @@ using System.Web.Mvc.Async;
 using System.Web.Profile;
 using System.Web.Routing;
 using ControllerHiding.Constants;
-using ControllerHiding.Extensions;
-using ControllerHiding.Models;
 using ControllerHiding.Routing;
 
-namespace ControllerHiding.Controllers
+namespace ControllerHiding.Controllers.Base
 {
     public class ChildController : ControllerBase, IActionFilter, IDisposable
     {

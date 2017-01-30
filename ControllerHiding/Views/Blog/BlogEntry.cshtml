@@ -1,0 +1,12 @@
+﻿
+@model ControllerHiding.DTO.BlogEntry
+
+
+<h1>@Model.Title</h1>
+<small style="color: gray">@Model.Date.ToShortDateString() | Comments: @Model.Comments.Count | Author: <a href="mailto:@Model.Author.Email">@Model.Author.FirstName @Model.Author.LastName</a></small>
+<br /><br />
+<img src="@Model.ImageUrl" />
+<br /><br />
+<p><b>@Model.Teaser</b></p>
+
+<p>@Model.Text</p>

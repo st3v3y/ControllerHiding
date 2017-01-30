@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using ControllerHiding.DTO
+@using ControllerHiding.Extensions
+@using ControllerHiding.Repositories
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -27,14 +30,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">HiddenControllers</a>
+                <a class="navbar-brand" href="/">HiddenControllers</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
+                @{
+                    var currentPage = ViewContext.RouteData.DataTokens["page"]?.ToString();
+                    var pageRepository = new PageRepository();
+                    var lastestBlogEntry = new BlogEntryRepository().GetAllBlogEntries().OrderByDescending(x => x.Date).FirstOrDefault();
+                    var blogEntryPage = pageRepository.GetPageByRoute("LatestEntry");
+                }
+                <ul class="nav navbar-nav">
+                    <li class="@(currentPage == "Blog" ? "active" : string.Empty)"><a href="@Url.LinkToPage(pageRepository.GetPageByRoute("Blog"))">Blog</a></li>
+                    <li class="@(currentPage == "LatestEntry" ? "active" : string.Empty)"><a href="@Url.ChildAction("BlogEntry", "Blog", "Entry", blogEntryPage, new { entryGuid = lastestBlogEntry?.Id })">Latest entry</a></li>
+                </ul>
             </div><!--/.navbar-collapse -->
         </div>
     </nav>
-    
+
     @RenderBody()
+
+    <div class="container">
+        <hr />
+        <footer>
+            <p>© @DateTime.Now.Year Company, Inc.</p>
+        </footer>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

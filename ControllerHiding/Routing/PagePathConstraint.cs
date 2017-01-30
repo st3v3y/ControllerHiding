@@ -1,10 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Routing;
+using ControllerHiding.DTO;
+using ControllerHiding.Repositories;
 
 namespace ControllerHiding.Routing
 {
     public class PagePathConstraint : IRouteConstraint
     {
+        private readonly PageRepository _pageRepository;
+
+        public PagePathConstraint()
+        {
+            _pageRepository = new PageRepository();
+        }
+
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
             route.DataTokens.Clear();
@@ -17,40 +30,43 @@ namespace ControllerHiding.Routing
             var pagePath = values[parameterName].ToString();
 
             string[] pageSlugs = pagePath.Split('/');
-            if (pageSlugs.Length == 1 && pageSlugs[0] == string.Empty)
-            {
-                route.DataTokens.Add("page", "Home");
-                route.DataTokens.Add("path", pagePath);
 
-                return true; //default
-            }
+            string[] identifierParams;
+            var pages = ReceivePages(pageSlugs, out identifierParams);
 
-            if (!PageExtists(pageSlugs))
-            {
-                return true;
-            }
-
-            route.DataTokens.Add("page", pageSlugs[0]);
+            route.DataTokens.Add("page", pages.LastOrDefault());
+            route.DataTokens.Add("pages", pages);
             route.DataTokens.Add("path", pagePath);
+            route.DataTokens.Add("params", identifierParams);
 
             return true;
         }
 
-        /// <summary>
-        /// Here we are checking, if the called "page" exists. Normally, we would check against the database
-        /// </summary>
-        /// <param name="urlSegments">Splittet URL segments</param>
-        /// <returns></returns>
-        private static bool PageExtists(string[] urlSegments)
+        private List<Page> ReceivePages(string[] urlSegments, out string[] identifierParams)
         {
-            if (urlSegments[0] == "MyHomepage")
+            var pages = new List<Page>();
+
+            int i = 0;
+            Page page;
+            while (i < urlSegments.Length && IsPage(urlSegments[i], string.Join("/", urlSegments.Take(i + 1)), out page))
             {
-                if (urlSegments.Length == 1 || urlSegments[1] == string.Empty || urlSegments[1] == "MyAction")
-                {
-                    return true; 
-                }
+                pages.Add(page);
+                i++;
             }
-            return false;
+
+            identifierParams = urlSegments.Skip(i).ToArray();
+
+            return pages;
+        }
+
+        private bool IsPage(string urlSegment, string path, out Page page)
+        {
+            page = _pageRepository.GetPageByRoute(urlSegment);
+            if (page == null)
+            {
+                return false;
+            }
+            return page.RoutePath == path;
         }
     }
 }

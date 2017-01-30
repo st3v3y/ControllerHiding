@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\JsonGenerator.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -108,6 +109,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="App_Data\BlogEntries.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -117,20 +119,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\KeyConstants.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Attributes\ChildRouteAttribute.cs" />
+    <Compile Include="Attributes\ChildRouteDefaultAttribute.cs" />
+    <Compile Include="Attributes\ChildRouteConstraintAttribute.cs" />
+    <Compile Include="CustomAttributes\ChildRouteBlogEntryYearConstraintAttribute.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Extensions\RouteValueDictionaryExtensions.cs" />
+    <Compile Include="Extensions\UrlExtensions.cs" />
+    <Compile Include="Helper\ChildRouteHelper.cs" />
+    <Compile Include="Helper\ControllerHelper.cs" />
+    <Compile Include="Models\LatestCommentsModel.cs" />
+    <Compile Include="Models\BlogListModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Controllers\StandardFormController.cs" />
-    <Compile Include="Extensions\ViewDataExtensions.cs" />
     <Compile Include="Models\AnotherHiddenFormSuccessModel.cs" />
-    <Compile Include="Controllers\ChildController.cs" />
+    <Compile Include="Controllers\Base\ChildController.cs" />
     <Compile Include="Extensions\EncryptionExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Models\AnotherHiddenFormModel.cs" />
-    <Compile Include="Controllers\BaseHideController.cs" />
+    <Compile Include="Controllers\Base\BaseHideController.cs" />
     <Compile Include="Controllers\AnotherHiddenFormController.cs" />
     <Compile Include="Controllers\HiddenFormController.cs" />
-    <Compile Include="Models\HiddenGetData.cs" />
+    <Compile Include="Dto\Author.cs" />
+    <Compile Include="Dto\BlogEntry.cs" />
+    <Compile Include="Dto\Comment.cs" />
+    <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\BlogEntryRepository.cs" />
+    <Compile Include="Repositories\JsonBlogRepository.cs" />
+    <Compile Include="Repositories\PageRepository.cs" />
+    <Compile Include="Routing\HiddenGetData.cs" />
     <Compile Include="Models\StandardFormModel.cs" />
     <Compile Include="Routing\HomeActionResult.cs" />
     <Compile Include="Models\HiddenFormModel.cs" />
+    <Compile Include="Dto\Module.cs" />
+    <Compile Include="Dto\ModuleArea.cs" />
+    <Compile Include="Dto\Page.cs" />
     <Compile Include="Routing\PagePathConstraint.cs" />
     <Compile Include="Routing\RenderRouteHandler.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -140,7 +164,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ObjectCrypter.cs" />
-    <Compile Include="Models\HiddenFormData.cs" />
+    <Compile Include="Routing\HiddenFormData.cs" />
     <Compile Include="Security\StringCrypter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +176,12 @@
     <Content Include="Views\AnotherHiddenForm\Index.cshtml" />
     <Content Include="Views\AnotherHiddenForm\Success.cshtml" />
     <Content Include="Views\StandardForm\Index.cshtml" />
+    <Content Include="Views\Blog\BlogEntryList.cshtml" />
+    <Content Include="Views\Shared\_Paging.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Comment\Latest.cshtml" />
+    <Content Include="Views\Blog\BlogEntry.cshtml" />
+    <Content Include="Views\Comment\CommentList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -160,8 +190,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Child\" />
+    <Folder Include="Views\Paging\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

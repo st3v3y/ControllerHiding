@@ -1,39 +1,87 @@
-﻿@using ControllerHiding.Constants
-@using ControllerHiding.Extensions
-@model dynamic
+﻿@using ControllerHiding.Extensions
+@using ControllerHiding.Repositories
+@model ControllerHiding.DTO.Page
 
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
-    <div class="container">
-        <h2>Home</h2>
-        <p>Home, sweet home!</p>
-        <p>But you can also check out <a href="/MyHomepage">here</a> or <a href="/MyHomepage/MyAction">here</a> (notice URL will change)
-        </p>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            @Html.ChildAction("Index", "StandardForm", new Guid("A53EF782-C9AB-476C-ABA4-B0946F907512").ToString())
+@switch (Model.RouteName) //Simulate different templates per page
+{
+    case "":
+        <div class="jumbotron">
+            <div class="container">
+                <h2>Home</h2>
+                <p>Home, sweet home!</p>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-4">
-            @Html.ChildAction("Index", "HiddenForm", new Guid("02A9152F-FF90-4A4D-9334-98948E60F834").ToString())
-        </div>
-        <div class="col-md-4">
-            @Html.ChildAction("Index", "HiddenForm", "02A9152F-FF90-4A4D-9334-98948E60F834")
-        </div>
-        <div class="col-md-4">
-            @Html.ChildAction("Index", "AnotherHiddenForm", "Another-identification-string")
-        </div>
-    </div>
-</div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.RenderModuleArea(Model, "TopArea")
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.RenderModuleArea(Model, "BottomAreaLeft")
+                </div>
+                <div class="col-md-4">
+                    @Html.RenderModuleArea(Model, "BottomAreaCenter")
+                </div>
+                <div class="col-md-4">
+                    @Html.RenderModuleArea(Model, "BottomAreaRight")
+                </div>
+            </div>
+        </div>
+        break;
 
+    case "Blog":
+        <div class="jumbotron">
+            <div class="container">
+                <h2>Blog</h2>
+                <p>Here are some Blog-Entries</p>
+                <p>They are fake of cause ;-P</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">@Html.RenderModuleArea(Model, "LeftContent")</div>
+                <div class="col-md-3">@Html.RenderModuleArea(Model, "RightContent")</div>
+            </div>
+        </div>
+        break;
+
+    case "BlogEntry":
+    case "LatestEntry":
+        <div class="jumbotron">
+            <div class="container">
+                @if (Model.RouteName == "BlogEntry")
+                {
+                    <h2>Blog</h2>
+                    <p>Here is one of our cool Blog Entries</p>
+                    <p>They are fake of cause ;-P</p>
+                }
+                else
+                {
+                    <h2>Latest Post</h2>
+                    <p>Here is the latest post</p>
+                }
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">@Html.RenderModuleArea(Model, "LeftContent")</div>
+                <div class="col-md-3">@Html.RenderModuleArea(Model, "RightContent")</div>
+            </div>
+            <div class="row">
+                <hr/>
+                <div class="col-md-12"><a href="@Url.LinkToPage(new PageRepository().GetPageByRoute("Blog"))">Back to the list</a>
+                </div>
+            </div>
+        </div>
+        break;
+}

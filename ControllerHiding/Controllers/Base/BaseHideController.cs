@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using ControllerHiding.Constants;
 
-namespace ControllerHiding.Controllers
+namespace ControllerHiding.Controllers.Base
 {
     public abstract class BaseHideController : ChildController
     {

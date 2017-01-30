@@ -1,0 +1,19 @@
+﻿@using ControllerHiding.Extensions
+@model ControllerHiding.Models.PagingModel
+
+<div class="row">
+    <div class="col-md-12">
+        @for (int i = 1; i <= Model.PagesCount; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                @i
+            }
+            else
+            {
+                Model.RouteValues.AddOrSetRouteValue(Model.PageNumberRouteParamaterName, i);
+                <a href="@Url.ChildAction(Model.Action, Model.Controller, Model.Identifier, Model.RouteValues)">@i</a>
+            }
+        }
+    </div>
+</div>

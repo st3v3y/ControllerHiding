@@ -1,13 +1,36 @@
-﻿using System.Web;
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using ControllerHiding.Constants;
-using ControllerHiding.Models;
+using ControllerHiding.DTO;
+using ControllerHiding.Routing;
 
 namespace ControllerHiding.Extensions
 {
     public static class HtmlExtensions
     {
+        public static MvcHtmlString RenderModuleArea(this HtmlHelper htmlHelper, Page page, string moduleAreaName)
+        {
+            Contract.Requires(page != null);
+            Contract.Requires(moduleAreaName != null);
+
+            var moduleArea = page.ModuleAreas.FirstOrDefault(x => x.Name == moduleAreaName);
+            if (moduleArea == null)
+            {
+                throw new Exception("Module Area does not exist. Name: " + moduleAreaName);
+            }
+
+            var htmlResult = new StringBuilder();
+            foreach (var module in moduleArea.Modules)
+            {
+                htmlResult.Append(htmlHelper.ChildAction(module.Action, module.Controller, module.Identifier));
+            }
+            return MvcHtmlString.Create(htmlResult.ToString());
+        }
+
         public static MvcHtmlString ChildAction(this HtmlHelper htmlHelper, string actionName, string controllerName, string identifier)
         {
             var viewData = htmlHelper.ViewData;

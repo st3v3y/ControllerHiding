@@ -1,0 +1,23 @@
+﻿@using ControllerHiding.Extensions
+@using ControllerHiding.Repositories
+@model ControllerHiding.Models.BlogListModel
+
+<h2>All Blog Entries</h2>
+
+@foreach (var entry in Model.Entries)
+{
+    var targetPage = new PageRepository().GetPageByRoute("BlogEntry");
+    var entryLink = Url.ChildAction("BlogEntry", "Blog", "Entry", targetPage, new { entryGuid = entry.Id });
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3><a href="@entryLink">@entry.Title</a></h3>
+            <small style="color:gray">@entry.Date.ToShortDateString() | Comments: @entry.Comments.Count | Author: <a href="mailto:@entry.Author.Email">@entry.Author.FirstName @entry.Author.LastName</a></small>
+            <p>@entry.Teaser <a href="@entryLink">more...</a></p>
+            <p>Tags: @string.Join(", ", entry.Tags)</p>
+            <hr />
+        </div>
+    </div>
+}
+
+@Html.Partial("_Paging", Model.PagingModel)

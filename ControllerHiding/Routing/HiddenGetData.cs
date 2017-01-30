@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ControllerHiding.Models
+﻿namespace ControllerHiding.Routing
 {
     public class HiddenGetData
     {

@@ -1,0 +1,13 @@
+﻿@model ControllerHiding.Models.LatestCommentsModel
+
+
+<h2>Latest Comments</h2>
+
+@foreach (var comment in Model.Entries)
+{
+    <small style="color: gray">@comment.Date.ToShortDateString() | From <a href="mailto:@comment.Author.Email">@comment.Author.FirstName @comment.Author.LastName</a></small>
+    <div>@comment.Text.Substring(0, 55)...</div>
+    <p></p>
+}
+
+@Html.Partial("_Paging", Model.PagingModel)
