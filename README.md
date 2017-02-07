@@ -57,7 +57,10 @@ public ActionResult BlogEntryList(int? year, int pageNumber = 1)
 }
 ```
 
-The order of multiple "Child-Routes" does not matter. An URL like "http://mywebsite.com/blog/identifier2/my-param/list/2017/2" would also work as the one above.
+The order of multiple "Child-Routes" does not matter. An URL like
+"http://mywebsite.com/blog/identifier1/param1/identifier2/param1/param2" 
+would exactly work the same like  
+"http://mywebsite.com/blog/identifier2/param1/param2/identifier1/param1"
 
 ### ChildRouting: Defaults
 Given you have an URL like "http://mywebsite.com/blog/list/2017/2" the "year"-parameter acts like a filter. You're just displaying blog entries of 2017. In some cases it would be more convenient to use an "default" instead (which is not "-1" or "0" because it would't look very professional). So you wish to have a default like "all" with an URL like: "http://mywebsite.com/blog/list/all/2".
