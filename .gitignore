@@ -45,3 +45,13 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# Visual Studio 
+.vs
+ControllerHiding/obj
+
+# Nuget
+packages
+
+
