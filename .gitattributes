@@ -17,4 +17,6 @@
 *.RTF	 diff=astextplain
 
 # Linguist Vendored
-/ControllerHiding/Content/* linguist-vendored
+ControllerHiding/Content/* linguist-vendored
+ControllerHiding/Scripts/* linguist-vendored
+packages/* linguist-vendored
